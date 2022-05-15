@@ -40,15 +40,44 @@ class SaleOrder(models.Model):
         return super(SaleOrder,self).action_confirm()
 
 
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+
+    bom_total_cost = fields.Float(compute='_amount_all', string='Total Cost', store=True)
+
+    @api.depends('order_line.bom_id')
+    def _amount_all(self):
+        """
+        Compute the total amounts of the SO.
+        """
+        for bom in self:
+            amount = 0.0
+            for line in bom.order_line:
+                amount += line.bom_cost
+            bom.update({
+                'bom_total_cost': amount,
+            })
+
+
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     bom_id = fields.Many2one("mrp.bom",string="Bill of Material")
+    bom_cost = fields.Float(compute='_compute_cost', string='BOM Cost', store=True)
 
+    @api.depends('bom_id',)
+    def _compute_cost(self):
+            """
+            Compute the Costs of the BOM line.
+            """
+            for line in self:
+                cost = line.bom_id.bom_total_cost
+                line.update({
+                    'bom_cost': cost,
+                })
 
 class MrpBom(models.Model):
     _inherit = 'mrp.bom'
-
     @api.constrains('product_id', 'product_tmpl_id', 'bom_line_ids')
     def _check_product_recursion(self):
 
