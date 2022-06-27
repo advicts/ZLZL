@@ -8,33 +8,33 @@ class MrpProduction(models.Model):
 
     is_new_mo = fields.Boolean()
 
-#--------------------------------------------------------------------
+
     def action_confirm(self):
         if not self.bom_id and self.is_new_mo:
             raise ValidationError(_('Please add valid bill of material first..! '))
         res = super(MrpProduction,self).action_confirm()
         return res
-#---------------------------------------------------------------------
+
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     def action_confirm(self):
 
         for rec in self.order_line:
-            if not rec.bom_id: 
-               raise ValidationError(("Please add Bill of Material in sale order line!!"))
+            if not rec.bom_id:
+                raise ValidationError(("Please add Bill of Material in sale order line!!"))
             if rec.bom_id and rec.product_id:
                 if rec.bom_id.product_tmpl_id != rec.product_id.product_tmpl_id:
                      raise ValidationError(("Sale Order Product and Bill of Material's Product must be same!!!"))
-
+            
             mo=self.env['mrp.production'].create({
-                            'product_id': rec.bom_id.product_id.id or rec.product_id.id,
-                            'product_qty':rec.bom_id.product_qty,
-                            'product_uom_qty':rec.bom_id.product_qty,
-                            'product_uom_id': rec.product_uom.id,
-                            'origin':self.name,
-                            'is_new_mo':True,
-                            })
+                        'product_id': rec.bom_id.product_id.id or rec.product_id.id,
+                        'product_qty':rec.bom_id.product_qty,
+                        'product_uom_qty':rec.bom_id.product_qty,
+                        'product_uom_id': rec.product_uom.id,
+                        'origin':self.name,
+                        'is_new_mo':True,
+                        })
             mo._onchange_move_raw()
 
         return super(SaleOrder,self).action_confirm()
