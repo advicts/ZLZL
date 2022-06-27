@@ -27,15 +27,15 @@ class SaleOrder(models.Model):
                 if rec.bom_id.product_tmpl_id != rec.product_id.product_tmpl_id:
                      raise ValidationError(("Sale Order Product and Bill of Material's Product must be same!!!"))
             
-            #mo=self.env['mrp.production'].create({
-            #            'product_id': rec.bom_id.product_id.id or rec.product_id.id,
-            #            'product_qty':rec.bom_id.product_qty,
-            #            'product_uom_qty':rec.bom_id.product_qty,
-            #            'product_uom_id': rec.product_uom.id,
-            #            'origin':self.name,
-            #            'is_new_mo':True,
-            #            })
-            #mo._onchange_move_raw()
+            mo=self.env['mrp.production'].create({
+                        'product_id': rec.bom_id.product_id.id or rec.product_id.id,
+                        'product_qty':rec.bom_id.product_qty,
+                        'product_uom_qty':rec.bom_id.product_qty,
+                        'product_uom_id': rec.product_uom.id,
+                        'origin':self.name,
+                        'is_new_mo':True,
+                        })
+            mo._onchange_move_raw()
 
         return super(SaleOrder,self).action_confirm()
 
