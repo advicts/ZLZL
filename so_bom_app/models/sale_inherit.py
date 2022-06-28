@@ -10,8 +10,8 @@ class MrpProduction(models.Model):
 
 
     def action_confirm(self):
-        #if not self.bom_id and self.is_new_mo:
-            #raise ValidationError(_('Please add valid bill of material first..! '))
+        if not self.bom_id and self.is_new_mo:
+            raise ValidationError(_('Please add valid bill of material first..! '))
         res = super(MrpProduction,self).action_confirm()
         return res
 
@@ -21,8 +21,8 @@ class SaleOrder(models.Model):
     def action_confirm(self):
 
         for rec in self.order_line:
-            #if not rec.bom_id:
-                #raise ValidationError(("Please add Bill of Material in sale order line!!"))
+            if not rec.bom_id:
+                raise ValidationError(("Please add Bill of Material in sale order line!!"))
             if rec.bom_id and rec.product_id:
                 if rec.bom_id.product_tmpl_id != rec.product_id.product_tmpl_id:
                      raise ValidationError(("Sale Order Product and Bill of Material's Product must be same!!!"))
