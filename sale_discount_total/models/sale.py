@@ -39,6 +39,7 @@ class SaleOrder(models.Model):
                 amount_tax += line.price_tax
                 amount_discount += (line.product_uom_qty * line.price_unit * line.discount) / 100
             order.update({
+                'x_studio_total_area': amount_untaxed,
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
                 'amount_discount': amount_discount,
