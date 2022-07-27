@@ -34,14 +34,11 @@ class SaleOrder(models.Model):
         """
         for order in self:
             amount_untaxed = amount_tax = amount_discount = 0.0
-            total_area=0
             for line in order.order_line:
-                total_area +=line.x_studio_area
                 amount_untaxed += line.price_subtotal
                 amount_tax += line.price_tax
                 amount_discount += (line.product_uom_qty * line.price_unit * line.discount) / 100
             order.update({
-                'x_studio_total_area': total_area,
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
                 'amount_discount': amount_discount,
@@ -67,6 +64,9 @@ class SaleOrder(models.Model):
     def supply_rate(self):
 
         for order in self:
+            for line in order.order_line:
+                    line.x_studio_test = order.x_studio_twospace
+
             if order.discount_type == 'percent':
                 for line in order.order_line:
                     line.discount = order.discount_rate
@@ -80,6 +80,7 @@ class SaleOrder(models.Model):
                     discount = order.discount_rate
                 for line in order.order_line:
                     line.discount = discount
+        
 
     def _prepare_invoice(self, ):
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
