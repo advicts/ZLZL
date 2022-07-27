@@ -31,6 +31,14 @@ class SaleOrder(models.Model):
             bom.update({
                 'bom_total_cost': amount,
             })
+            
+        for order in self:
+            area = 0.0
+            for line in order.order_line:
+                area += line.x_studio_area
+            order.update({
+                'x_studio_total_area': area,
+            })
 
     def action_confirm(self):
 
