@@ -65,7 +65,7 @@ class SaleOrder(models.Model):
 
         for order in self:
             for line in order.order_line:
-                    line.x_studio_test = order.x_studio_twospace
+                    line.x_studio_total_price = (line.x_studio_m_price* line.x_studio_area)
 
             if order.discount_type == 'percent':
                 for line in order.order_line:
