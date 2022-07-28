@@ -65,7 +65,7 @@ class SaleOrder(models.Model):
 
         for order in self:
             for line in order.order_line:
-                    line.x_studio_total_price = (line.x_studio_m_price* line.x_studio_area)
+                    line.x_studio_total_price = (line.x_studio_m_price* line.x_studio_area)+(order.x_studio_twospace*line.x_studio_twospcount)+(order.x_studio_antythprice*line.x_studio_thcount)+(order.x_studio_antythsprice*line.x_studio_thscount)+(order.x_studio_hidroground*line.x_studio_hidrogcount)+(order.x_studio_hidroup*line.x_studio_hidroucount)+(order.x_studio_handprice*line.x_studio_handcount)                  
 
             if order.discount_type == 'percent':
                 for line in order.order_line:
