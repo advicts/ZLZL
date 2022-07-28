@@ -67,7 +67,7 @@ class SaleOrder(models.Model):
             total_area=0
             total_qty=0
             for line in order.order_line:
-                    line.x_studio_total_price = (line.x_studio_m_price* line.x_studio_area)+(order.x_studio_twospace*line.x_studio_twospcount)+(order.x_studio_antythprice*line.x_studio_thcount)+(order.x_studio_antythsprice*line.x_studio_thscount)+(order.x_studio_hidroground*line.x_studio_hidrogcount)+(order.x_studio_hidroup*line.x_studio_hidroucount)+(order.x_studio_handprice*line.x_studio_handcount)                  
+                    line.price_unit = (line.x_studio_m_price* line.x_studio_area)+(order.x_studio_twospace*line.x_studio_twospcount)+(order.x_studio_antythprice*line.x_studio_thcount)+(order.x_studio_antythsprice*line.x_studio_thscount)+(order.x_studio_hidroground*line.x_studio_hidrogcount)+(order.x_studio_hidroup*line.x_studio_hidroucount)+(order.x_studio_handprice*line.x_studio_handcount)                  
                     total_area+=line.x_studio_area
                     total_qty+=line.product_uom_qty
                     
