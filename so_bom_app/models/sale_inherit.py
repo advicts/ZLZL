@@ -31,7 +31,7 @@ class SaleOrder(models.Model):
             bom.update({
                 'bom_total_cost': amount,
             })
-            
+
     def action_confirm(self):
 
         for rec in self.order_line:
