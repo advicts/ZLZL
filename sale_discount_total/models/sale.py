@@ -62,8 +62,15 @@ class SaleOrder(models.Model):
 
     @api.onchange('discount_type', 'discount_rate', 'order_line')
     def supply_rate(self):
-
+         
         for order in self:
+            lineno=0
+            for line in order.order_line:
+                lineno = lineno + 1
+                line.update({
+                'x_studio_lineno':lineno,
+                })
+                
             total_area=0
             total_qty=0
             for line in order.order_line:
