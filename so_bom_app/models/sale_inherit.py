@@ -51,6 +51,7 @@ class SaleOrder(models.Model):
                                 'bom_id':rec.bom_id.id,
 #                                 'bom_id':rec.bom_id.id,
                                 'origin':self.name,
+                                'x_studio_address':'From Sales Order with BOM',
                                 'is_new_mo':True,
                                 })
                     mo._onchange_move_raw()
