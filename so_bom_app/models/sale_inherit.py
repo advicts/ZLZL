@@ -48,7 +48,7 @@ class SaleOrder(models.Model):
                                 'product_qty':rec.bom_id.product_qty,
                                 'product_uom_qty':rec.bom_id.product_qty,
                                 'product_uom_id': rec.product_uom.id,
-                                'bom_id':rec.bom_id,
+                                'bom_id':rec.bom_id.id,
 #                                 'bom_id':rec.bom_id.id,
                                 'origin':self.name,
                                 'is_new_mo':True,
