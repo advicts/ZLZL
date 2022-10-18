@@ -27,8 +27,8 @@ class SaleOrderLine(models.Model):
             line_product = line.product_id
             if not bom_product or line_product == bom_product:
                 continue
-#             raise ValidationError(
-#                 _(
-#                     "Please select BoM that has matched product with the line `{}`"
-#                 ).format(line_product.name)
-#             )
+            raise ValidationError(
+                _(
+                    "Please select BoM that has matched product with the line `{}`"
+                ).format(line_product.name)
+            )
