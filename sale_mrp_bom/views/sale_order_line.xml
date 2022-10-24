@@ -6,7 +6,7 @@
 	    <field name="inherit_id" ref="sale.view_order_form"/>
 	    <field name="arch" type="xml">
 	    	<xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
-               <field name="bom_id" groups="sale_mrp_bom.sale_mrp_bom_group" />
+               <field name="bom_id" />
             </xpath>
         </field>
     </record>
