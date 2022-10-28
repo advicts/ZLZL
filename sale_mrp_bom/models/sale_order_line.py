@@ -16,19 +16,19 @@ class SaleOrderLine(models.Model):
         "('product_id', '=', False)]",
     )
 
-    @api.constrains("bom_id", "product_id")
-    def _check_match_product_variant_ids(self):
-        for line in self:
-            if line.bom_id:
-                bom_product_tmpl = line.bom_id.product_tmpl_id
-                bom_product = bom_product_tmpl.product_variant_ids
-            else:
-                bom_product_tmpl, bom_product = None, None
-            line_product = line.product_id
-            if not bom_product or line_product == bom_product:
-                continue
-            raise ValidationError(
-                _(
-                    "Please select BoM that has matched product with the line `{}`"
-                ).format(line_product.name)
-            )
+#     @api.constrains("bom_id", "product_id")
+#     def _check_match_product_variant_ids(self):
+#         for line in self:
+#             if line.bom_id:
+#                 bom_product_tmpl = line.bom_id.product_tmpl_id
+#                 bom_product = bom_product_tmpl.product_variant_ids
+#             else:
+#                 bom_product_tmpl, bom_product = None, None
+#             line_product = line.product_id
+#             if not bom_product or line_product == bom_product:
+#                 continue
+#             raise ValidationError(
+#                 _(
+#                     "Please select BoM that has matched product with the line `{}`"
+#                 ).format(line_product.name)
+#             )
