@@ -4,3 +4,4 @@
 from . import serveraction
 from . import smsclient
 from . import smstemplate
+from . import SmsNewApi
